@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boeing vs Airbus</title>
+<style>
+  body {
+    display: flex;
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  .side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+  .boeing {
+    background-color: blue;
+    color: white;
+  }
+  .airbus {
+    background-color: red;
+    color: white;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="boeing" class="side boeing">
+  <h1>Boeing</h1>
+</div>
+
+<div id="airbus" class="side airbus">
+  <h1>Airbus</h1>
+</div>
+
+<script>
+  const boeingData = {
+    "737": "Short to medium range airliner.",
+    "747": "First wide-body airliner, known as the Jumbo Jet.",
+    "777": "Long range, wide-body twin-engine airliner.",
+    "787": "Long range, mid-size wide-body, twin-engine jet airliner."
+  };
+
+  const airbusData = {
+    "A320": "Single aisle airliner for short to medium routes.",
+    "A330": "Medium to long range wide-body twin-engine jet airliner.",
+    "A350": "Long range, wide-body airliner.",
+    "A380": "World's largest passenger airliner, a double-deck, wide-body, four-engine jet airliner."
+  };
+
+  function showPlanes(side, data) {
+    const sideDiv = document.getElementById(side);
+    sideDiv.innerHTML = `<button onclick="reset('${side}')">Back</button>`;
+    Object.keys(data).forEach(key => {
+      const planeDiv = document.createElement('div');
+      planeDiv.textContent = key;
+      planeDiv.onclick = () => showDetails(side, key, data[key]);
+      sideDiv.appendChild(planeDiv);
+    });
+  }
+
+  function showDetails(side, plane, details) {
+    const sideDiv = document.getElementById(side);
+    sideDiv.innerHTML = `<button onclick="showPlanes('${side}', ${side === 'boeing' ? 'boeingData' : 'airbusData'})">Back</button><h2>${plane}</h2><p>${details}</p>`;
+  }
+
+  function reset(side) {
+    const sideDiv = document.getElementById(side);
+    sideDiv.innerHTML = `<h1>${side.charAt(0).toUpperCase() + side.slice(1)}</h1>`;
+    sideDiv.onclick = () => showPlanes(side, side === 'boeing' ? boeingData : airbusData);
+  }
+
+  document.getElementById('boeing').onclick = () => showPlanes('boeing', boeingData);
+  document.getElementById('airbus').onclick = () => showPlanes('airbus', airbusData);
+</script>
+
+</body>
+</html>
